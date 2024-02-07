@@ -1,11 +1,12 @@
 import { readdir } from "fs/promises";
-import { ENOENT, ERROR_MESSAGE } from "./helpers/constants.mjs";
+import { printErrorMsg } from "../helpers/utils.js";
 
 export const list = async (dirPath) => {
   try {
     const files = await readdir(dirPath, { withFileTypes: true });
 
     const entities = files
+      .sort((a, b) => a.name.localeCompare(b.name))
       .map((file) => ({
         name: file.name,
         type: file.isFile() ? "file" : "directory",
@@ -20,11 +21,8 @@ export const list = async (dirPath) => {
           directories: [],
         }
       );
-    return [...entities.directories.sort(), ...entities.files.sort()];
-  } catch (err) {
-    if (err.code === ENOENT) {
-      throw new Error(ERROR_MESSAGE);
-    }
-    throw err;
+    return [...entities.directories, ...entities.files];
+  } catch {
+    printErrorMsg();
   }
 };
