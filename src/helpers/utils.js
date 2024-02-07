@@ -4,6 +4,7 @@ import { COLORS } from "./constants.js";
 
 export const getFilename = (url) => fileURLToPath(url);
 export const getDirname = (url) => dirname(getFilename(url));
+export const getStringAfterCmd = (cmd, cmdLength = 2) => cmd.slice(cmdLength).trim();
 
 export const printCurrentPathMsg = () => {
   console.log(COLORS.info, `You are currently in ${process.cwd()}\n`);

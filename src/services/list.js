@@ -21,7 +21,7 @@ export const list = async (dirPath) => {
           directories: [],
         }
       );
-    return [...entities.directories, ...entities.files];
+    console.table([...entities.directories, ...entities.files]);
   } catch {
     printErrorMsg();
   }
