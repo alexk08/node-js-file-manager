@@ -17,11 +17,18 @@ const init = () => {
     prompt: "",
   });
 
-  const closeReadLine = () => {
-    rl.close();
-  };
+  rl.on("line", async (cmd) => {
+    process.stdout.write("\n");
 
-  rl.on("line", (cmd) => mainHandler(cmd, closeReadLine));
+    if (cmd === ".exit") {
+      rl.close();
+      return;
+    }
+
+    await mainHandler(cmd);
+
+    printCurrentPathMsg();
+  });
 
   rl.once("close", () => printCloseMsg(userName));
 };

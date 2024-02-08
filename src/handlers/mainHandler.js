@@ -1,7 +1,16 @@
-import { list, changeDirectory, removeFile, readFile, createFile } from "../services/index.js";
-import { printInvalidMsg, printCurrentPathMsg, getStringAfterCmd } from "../helpers/utils.js";
+import {
+  list,
+  changeDirectory,
+  removeFile,
+  readFile,
+  createFile,
+  copyFile,
+  moveFile,
+  renameFile,
+} from "../services/index.js";
+import { printInvalidMsg, getStringAfterCmd } from "../helpers/utils.js";
 
-const handler = async (cmd) => {
+export const mainHandler = async (cmd) => {
   if (cmd === "ls") {
     await list(process.cwd());
     return;
@@ -36,16 +45,23 @@ const handler = async (cmd) => {
     return;
   }
 
-  printInvalidMsg();
-};
-
-export const mainHandler = async (cmd, closeCallback) => {
-  if (cmd === ".exit") {
-    closeCallback();
+  if (cmd.startsWith("rn ")) {
+    const [pathToFile, newFileName] = getStringAfterCmd(cmd).split(" ");
+    renameFile(pathToFile, newFileName);
     return;
   }
 
-  await handler(cmd);
+  if (cmd.startsWith("cp ")) {
+    const [pathToFile, pathToNewDirectory] = getStringAfterCmd(cmd).split(" ");
+    await copyFile(pathToFile, pathToNewDirectory);
+    return;
+  }
 
-  printCurrentPathMsg();
+  if (cmd.startsWith("mv ")) {
+    const [pathToFile, pathToNewDirectory] = getStringAfterCmd(cmd).split(" ");
+    await moveFile(pathToFile, pathToNewDirectory);
+    return;
+  }
+
+  printInvalidMsg();
 };

@@ -9,6 +9,9 @@ export const readFile = async (path) => {
       .on("error", () => {
         printErrorMsg();
       })
+      .on("end", () => {
+        process.stdout.write("\n\n");
+      })
       .pipe(process.stdout);
   } catch {
     printErrorMsg();
