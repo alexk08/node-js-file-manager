@@ -6,3 +6,6 @@ export { createFile } from "./createFile.js";
 export { renameFile } from "./renameFile.js";
 export { copyFile } from "./copyFile.js";
 export { moveFile } from "./moveFile.js";
+export { calculateHash } from "./calculateHash.js";
+export { compress } from "./compress.js";
+export { decompress } from "./decompress.js";
