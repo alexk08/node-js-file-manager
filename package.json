@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "RS School Node JS Course Task File Manager",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.9.0"
   },
   "type": "module",
   "main": "index.js",
